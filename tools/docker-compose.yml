@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  main:
+    image: "openapitools/openapi-generator-cli"
+    command:
+      ["generate", "-i", "http://host.docker.internal:8080/swagger/doc.json", "-g", "typescript-fetch", "-o", "/local"]
+    volumes:
+      - ../src/services/generated:/local
