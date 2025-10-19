@@ -9,16 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as LinkedinRouteImport } from './routes/linkedin'
 import { Route as GithubRouteImport } from './routes/github'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ResumeRoute = ResumeRouteImport.update({
-  id: '/resume',
-  path: '/resume',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LinkedinRoute = LinkedinRouteImport.update({
   id: '/linkedin',
   path: '/linkedin',
@@ -39,45 +33,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/github': typeof GithubRoute
   '/linkedin': typeof LinkedinRoute
-  '/resume': typeof ResumeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/github': typeof GithubRoute
   '/linkedin': typeof LinkedinRoute
-  '/resume': typeof ResumeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/github': typeof GithubRoute
   '/linkedin': typeof LinkedinRoute
-  '/resume': typeof ResumeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/github' | '/linkedin' | '/resume'
+  fullPaths: '/' | '/github' | '/linkedin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/github' | '/linkedin' | '/resume'
-  id: '__root__' | '/' | '/github' | '/linkedin' | '/resume'
+  to: '/' | '/github' | '/linkedin'
+  id: '__root__' | '/' | '/github' | '/linkedin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GithubRoute: typeof GithubRoute
   LinkedinRoute: typeof LinkedinRoute
-  ResumeRoute: typeof ResumeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/resume': {
-      id: '/resume'
-      path: '/resume'
-      fullPath: '/resume'
-      preLoaderRoute: typeof ResumeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/linkedin': {
       id: '/linkedin'
       path: '/linkedin'
@@ -106,7 +89,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GithubRoute: GithubRoute,
   LinkedinRoute: LinkedinRoute,
-  ResumeRoute: ResumeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

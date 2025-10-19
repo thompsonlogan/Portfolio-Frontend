@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { useAddGithubVisitMutation, useAddLinkedinVisitMutation } from "../mutations/analytics-mutations"
 
 interface RedirectProps {
@@ -12,10 +12,11 @@ export function Redirect(props: RedirectProps) {
   const githubMutation = useAddGithubVisitMutation()
   const linkedinMutation = useAddLinkedinVisitMutation()
 
-  const mutation = platform === "github" ? githubMutation : linkedinMutation
+  const mutation = useMemo(() => {
+    return platform === "github" ? githubMutation : linkedinMutation
+  }, [githubMutation, linkedinMutation, platform])
 
   useEffect(() => {
-    console.log("run")
     const params = new URLSearchParams(window.location.search)
     const source = params.get("source") ?? "unknown"
 
@@ -26,8 +27,7 @@ export function Redirect(props: RedirectProps) {
     }, 10)
 
     return () => clearTimeout(timeout)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetUrl])
+  }, [mutation, targetUrl])
 
   return <div>Redirecting to {platform}...</div>
 }
