@@ -9,14 +9,9 @@ import { createServiceApis } from "./services/data"
 import { ServiceContext } from "./services/context"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-const FRONTEND_URL = import.meta.env.VITE_FRONTEND_URL
 
 if (!API_BASE_URL) {
   throw new Error("VITE_API_BASE_URL is not defined. Please check your .env file.")
-}
-
-if (!FRONTEND_URL) {
-  throw new Error("VITE_FRONTEND_URL is not defined. Please check your .env file.")
 }
 
 const queryClient = new QueryClient({
