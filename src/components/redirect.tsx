@@ -9,18 +9,18 @@ interface RedirectProps {
 export function Redirect(props: RedirectProps) {
   const { platform, targetUrl } = props
 
-  const githubMutation = useAddGithubVisitMutation()
-  const linkedinMutation = useAddLinkedinVisitMutation()
+  const { mutate: addGithubVisit } = useAddGithubVisitMutation()
+  const { mutate: addLinkedinVisit } = useAddLinkedinVisitMutation()
 
   const mutation = useMemo(() => {
-    return platform === "github" ? githubMutation : linkedinMutation
-  }, [githubMutation, linkedinMutation, platform])
+    return platform === "github" ? addGithubVisit : addLinkedinVisit
+  }, [platform, addGithubVisit, addLinkedinVisit])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const source = params.get("source") ?? "unknown"
 
-    mutation.mutate({ source })
+    mutation({ source })
 
     const timeout = setTimeout(() => {
       window.location.href = targetUrl
