@@ -6,9 +6,7 @@ interface RedirectProps {
   targetUrl: string
 }
 
-export function Redirect(props: RedirectProps) {
-  const { platform, targetUrl } = props
-
+export function Redirect({ platform, targetUrl }: RedirectProps) {
   const { mutate: addGithubVisit } = useAddGithubVisitMutation()
   const { mutate: addLinkedinVisit } = useAddLinkedinVisitMutation()
 
@@ -24,10 +22,26 @@ export function Redirect(props: RedirectProps) {
 
     const timeout = setTimeout(() => {
       window.location.href = targetUrl
-    }, 10)
+    }, 1000)
 
     return () => clearTimeout(timeout)
   }, [mutation, targetUrl])
 
-  return <div>Redirecting to {platform}...</div>
+  const platformName = platform === "github" ? "GitHub" : "LinkedIn"
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen text-center">
+      <h2 className="text-2xl font-semibold mb-2">Redirecting to {platformName}...</h2>
+      <p className="text-sm">
+        If you’re not redirected automatically,{" "}
+        <a
+          href={targetUrl}
+          className="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+        >
+          click here
+        </a>
+        .
+      </p>
+    </div>
+  )
 }
