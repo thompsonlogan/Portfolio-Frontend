@@ -1,7 +1,8 @@
-import { AnalyticsApi, Configuration, type ConfigurationParameters } from "./generated"
+import { AnalyticsApi, GithubApi, Configuration, type ConfigurationParameters } from "./generated"
 
 export interface ServiceApis {
   analyticsApi: AnalyticsApi
+  githubApi: GithubApi
 }
 
 export function createServiceApis(configParams?: ConfigurationParameters): ServiceApis {
@@ -9,5 +10,6 @@ export function createServiceApis(configParams?: ConfigurationParameters): Servi
 
   return {
     analyticsApi: new AnalyticsApi(config),
+    githubApi: new GithubApi(config),
   }
 }

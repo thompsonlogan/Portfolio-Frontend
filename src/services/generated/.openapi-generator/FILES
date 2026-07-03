@@ -1,7 +1,13 @@
 apis/AnalyticsApi.ts
+apis/GithubApi.ts
 apis/index.ts
 index.ts
-models/HandlersAddVisitRequest.ts
-models/HandlersAddVisitResponse.ts
+models/AnalyticsAddVisitRequest.ts
+models/AnalyticsAddVisitResponse.ts
+models/GithubContributionDayResponse.ts
+models/GithubContributionsResponse.ts
+models/GithubLanguageResponse.ts
+models/GithubProfileResponse.ts
+models/GithubRepoResponse.ts
 models/index.ts
 runtime.ts
