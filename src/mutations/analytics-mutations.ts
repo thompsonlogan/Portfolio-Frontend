@@ -6,13 +6,13 @@ import type {
   VisitPostRequest,
   VisitResumePostRequest,
 } from "../services/generated/apis/AnalyticsApi"
-import type { HandlersAddVisitRequest } from "../services/generated/models"
+import type { AnalyticsAddVisitRequest } from "../services/generated/models"
 
 export const useAddVisitMutation = () => {
   const { analyticsApi } = useServices()
 
   return useMutation({
-    mutationFn: async (request: HandlersAddVisitRequest) => {
+    mutationFn: async (request: AnalyticsAddVisitRequest) => {
       const requestParameters: VisitPostRequest = {
         visit: request,
       }
@@ -29,7 +29,7 @@ export const useAddGithubVisitMutation = () => {
   const { analyticsApi } = useServices()
 
   return useMutation({
-    mutationFn: async (request: HandlersAddVisitRequest) => {
+    mutationFn: async (request: AnalyticsAddVisitRequest) => {
       const requestParameters: VisitGithubPostRequest = {
         visit: request,
       }
@@ -46,7 +46,7 @@ export const useAddLinkedinVisitMutation = () => {
   const { analyticsApi } = useServices()
 
   return useMutation({
-    mutationFn: async (request: HandlersAddVisitRequest) => {
+    mutationFn: async (request: AnalyticsAddVisitRequest) => {
       const requestParameters: VisitLinkedinPostRequest = {
         visit: request,
       }
@@ -63,7 +63,7 @@ export const useAddResumeDownloadMutation = () => {
   const { analyticsApi } = useServices()
 
   return useMutation({
-    mutationFn: async (request: HandlersAddVisitRequest) => {
+    mutationFn: async (request: AnalyticsAddVisitRequest) => {
       const requestParameters: VisitResumePostRequest = {
         visit: request,
       }
