@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# Portfolio — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Logan Thompson's personal portfolio site. A single-page, dark-first site with a
+terminal-style hero, a live GitHub activity section (repos, languages, and a
+contribution heatmap pulled from the [backend API](https://github.com/thompsonlogan/Portfolio-Backend)),
+and lightweight first-party visit analytics.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** + **TypeScript**, bundled with **Vite 7**
+- **TanStack Router** (file-based routes) and **TanStack Query** for data fetching/caching
+- **Tailwind CSS v4** (CSS-first config) for styling
+- **shadcn/ui** components built on **Base UI** (`@base-ui/react`) primitives
+- **lucide-react** icons
+- A generated **typescript-fetch** API client (`src/services/generated`) for the Go backend
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Prerequisites: **Node 18+** and the [Portfolio-Backend](https://github.com/thompsonlogan/Portfolio-Backend)
+running locally (for the GitHub section and analytics).
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+cp .env.example .env   # then fill in the values below
+npm run dev            # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Start the Vite dev server (HMR)      |
+| `npm run build`   | Production build to `dist/`          |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint`    | Run ESLint                           |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Environment variables
+
+Configured via a git-ignored `.env` (Vite exposes only `VITE_`-prefixed vars):
+
+| Variable                   | Description                                     |
+| -------------------------- | ----------------------------------------------- |
+| `VITE_API_BASE_URL`        | Base URL of the backend API (e.g. `http://localhost:8080`) |
+| `VITE_GITHUB_URL`          | GitHub profile URL                              |
+| `VITE_LINKEDIN_URL`        | LinkedIn profile URL                            |
+| `VITE_RESUME_DOWNLOAD_URL` | Resume PDF/export URL for the download buttons  |
+
+## Project structure
+
+```
+src/
+  routes/            File-based routes (TanStack Router)
+  components/
+    portfolio/       Page sections (hero, about, work, github, connect, …)
+    ui/              shadcn/ui components (Base UI primitives)
+  queries/           TanStack Query hooks (GitHub data)
+  mutations/         Analytics visit-tracking mutations
+  services/
+    generated/       Auto-generated API client — do not edit by hand
+  data/              Static content (work history, nav, stack)
+  hooks/             Shared hooks (scroll spy, theme)
+```
+
+## API client
+
+`src/services/generated` is generated from the backend's OpenAPI spec — don't
+edit it by hand. To regenerate after backend API changes:
+
+```bash
+npx @openapitools/openapi-generator-cli generate \
+  -i ../Portfolio-Backend/docs/swagger.json \
+  -g typescript-fetch \
+  -o src/services/generated
 ```
