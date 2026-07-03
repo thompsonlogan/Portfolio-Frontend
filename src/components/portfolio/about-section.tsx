@@ -21,7 +21,7 @@ export function AboutSection() {
         <div className="flex flex-col gap-6">
           <p className="text-[clamp(18px,2.1vw,23px)] font-light leading-relaxed text-foreground text-pretty">
             I'm a full-stack software engineer based in Wisconsin with 4+ years building cloud-native applications end to
-            end — from PostgreSQL schemas and ASP.NET APIs to the React interfaces people actually touch.
+            end — from the React interfaces people actually touch down to the ASP.NET APIs and PostgreSQL schemas behind them.
           </p>
           <p className="max-w-[60ch] text-base leading-relaxed text-muted-foreground text-pretty">
             I care about the unglamorous parts: clean data models, fast feedback loops, tests that mean something, and
